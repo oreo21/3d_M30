@@ -95,19 +95,24 @@ void parse_file ( char * filename,
     double theta;
     char axis;
     int type;
+    int myStep = 100;
     double step = 0.01;
 
-    if (strncmp(line, "sphere", strlen(line)) == 0){
+    if (strncmp(line, "clear", strlen(line)) == 0){
+      printf("CLEAR\n");
+      (*edges).lastcol = 0;
+    }
+    else if (strncmp(line, "sphere", strlen(line)) == 0){
       fgets(line, sizeof(line), f);
       printf("SPHERE\t%s", line);
       sscanf(line, "%lf %lf %lf %lf", xvals, yvals, zvals, r);
-      add_sphere(edges, xvals[0], yvals[0], zvals[0], r[0], step);
+      add_sphere(edges, xvals[0], yvals[0], zvals[0], r[0], myStep);
     }
     else if (strncmp(line, "torus", strlen(line)) == 0){
       fgets(line, sizeof(line), f);
       printf("TORUS\t%s", line);
       sscanf(line, "%lf %lf %lf %lf %lf", xvals, yvals, zvals, r, r+1);
-      add_torus(edges, xvals[0], yvals[0], zvals[0], r[0], r[1], step);
+      add_torus(edges, xvals[0], yvals[0], zvals[0], r[0], r[1], myStep);
     }
     else if (strncmp(line, "box", strlen(line)) == 0){
       fgets(line, sizeof(line), f);
